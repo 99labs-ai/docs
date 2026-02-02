@@ -1,0 +1,78 @@
+---
+title: 'Delete Organization Member'
+api: 'DELETE https://app.usatimbre.com/api/organizations/{org_id}/members/{rfc}'
+description: 'Remove member from organization'
+---
+
+## Overview
+
+Remove a member from an organization. This does not delete the profile entirely, just removes the organization association.
+
+<Warning>
+  This action removes the member's access to the organization. The member's profile and any associated invoices remain in the system.
+</Warning>
+
+## Path Parameters
+
+<ParamField path="org_id" type="string" required>
+  The unique identifier of the organization
+</ParamField>
+
+<ParamField path="rfc" type="string" required>
+  The RFC (Mexican tax ID) or profile UUID of the member to remove
+</ParamField>
+
+## Response
+
+Returns a success message on successful removal.
+
+<ResponseField name="success" type="boolean">
+  Whether the removal was successful
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X DELETE "https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000" \
+  -H "Authorization: Bearer tmb_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer tmb_your_api_key_here'
+  }
+});
+const result = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.delete(
+    'https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000',
+    headers={'Authorization': 'Bearer tmb_your_api_key_here'}
+)
+result = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "success": true,
+  "message": "Member removed from organization successfully"
+}
+```
+
+```json 404
+{
+  "error": "Not Found",
+  "message": "Member not found in organization"
+}
+```
+</ResponseExample>

@@ -1,97 +1,119 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Timbre by Taxo"
+description: "Convierte tickets en facturas automáticamente con inteligencia artificial"
 ---
 
-## Setting up
+## Facturación automática impulsada por IA
 
-Get your documentation site up and running in minutes.
+Timbre transforma la manera en que las empresas gestionan su facturación. Convierte cualquier ticket o recibo en una factura CFDI válida en segundos, sin captura manual de datos.
 
 <Card
-  title="Start here"
+  title="Comienza Ahora"
   icon="rocket"
   href="/quickstart"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Integra Timbre en tu flujo de trabajo en minutos.
 </Card>
 
-## Make it yours
+## ¿Cómo funciona?
 
-Design a docs site that looks great and empowers your users.
+<Steps>
+  <Step title="Extracción inteligente">
+    Toma una foto del ticket. Nuestra IA extrae automáticamente el RFC del negocio, monto, fecha y todos los datos necesarios para facturar.
+  </Step>
+  <Step title="Flujo automatizado">
+    Timbre ejecuta el proceso de facturación por ti: ingresa al portal web del negocio, envía el correo de solicitud o manda un WhatsApp, según lo que el establecimiento requiera.
+  </Step>
+  <Step title="Factura validada">
+    Recibe tu CFDI timbrado (PDF y XML) listo para usar. Validado ante el SAT y disponible para descarga inmediata.
+  </Step>
+</Steps>
+
+## ¿Por qué Timbre?
+
+<CardGroup cols={2}>
+  <Card title="Inteligencia Artificial" icon="brain">
+    Nuestros modelos de IA extraen datos de tickets con alta precisión, incluso de recibos arrugados, borrosos o con formatos no estándar.
+  </Card>
+  <Card title="Flujos RPA multicanal" icon="robot">
+    Automatizamos el proceso completo: portales web, correo electrónico o WhatsApp. Cada negocio tiene su método y Timbre se adapta.
+  </Card>
+  <Card title="Sin captura manual" icon="keyboard">
+    Olvídate de transcribir datos. Solo toma la foto y Timbre hace el resto.
+  </Card>
+  <Card title="100% válido ante el SAT" icon="check">
+    Todas las facturas generadas cumplen con los requisitos del SAT y están debidamente timbradas.
+  </Card>
+</CardGroup>
+
+## Beneficios para tu empresa
+
+<AccordionGroup>
+  <Accordion title="Ahorra tiempo y recursos" icon="clock">
+    Reduce el tiempo de facturación de minutos a segundos. Tu equipo puede enfocarse en actividades de mayor valor en lugar de capturar datos manualmente.
+  </Accordion>
+  <Accordion title="Reduce errores humanos" icon="shield-check">
+    La captura automática elimina errores de transcripción que pueden causar problemas con el SAT o retrasos en deducciones.
+  </Accordion>
+  <Accordion title="Escala sin límites" icon="chart-line">
+    Procesa desde unas pocas facturas hasta miles por día. Nuestra infraestructura escala automáticamente con tu demanda.
+  </Accordion>
+  <Accordion title="Integración sencilla" icon="plug">
+    API REST bien documentada que se integra con cualquier sistema: ERPs, apps móviles, sistemas de gestión de gastos y más.
+  </Accordion>
+</AccordionGroup>
+
+## Casos de uso
+
+| Industria | Aplicación |
+|-----------|------------|
+| **Empresas** | Facturación automática de gastos de empleados (viáticos, gasolina, comidas) |
+| **Contadores** | Procesamiento masivo de tickets para múltiples clientes |
+| **Apps de gastos** | Integración nativa para facturar desde la app |
+| **Flotillas** | Facturación automática de combustible y casetas |
+| **Restaurantes** | Facturación instantánea para clientes |
+
+## Empieza a integrar
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Guía de Inicio Rápido"
+    icon="rocket"
+    href="/quickstart"
   >
-    Edit your docs locally and preview them in real time.
+    Configura tu cuenta y crea tu primera factura en minutos.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Autenticación"
+    icon="key"
+    href="/authentication"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Aprende cómo autenticar tus solicitudes a la API.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
+    title="Referencia API"
+    icon="code"
     href="/api-reference/introduction"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Documentación completa de todos los endpoints disponibles.
+  </Card>
+  <Card
+    title="Crear Factura"
+    icon="file-invoice"
+    href="/api-reference/timbre/create-invoice"
+  >
+    Ve directo al endpoint principal para crear facturas.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## URLs Base
 
-Everything you need to create world-class documentation.
+| Entorno | URL |
+|---------|-----|
+| Producción | `https://api.usatimbre.com` |
+| Desarrollo | `http://localhost:3000` |
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<Note>
+  **¿Tienes preguntas?** Contacta a nuestro equipo en [soporte@usatimbre.com](mailto:soporte@usatimbre.com)
+</Note>

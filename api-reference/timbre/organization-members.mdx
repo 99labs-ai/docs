@@ -1,0 +1,102 @@
+---
+title: 'List Organization Members'
+api: 'GET https://app.usatimbre.com/api/timbre/organization-members'
+description: 'List all members of an organization'
+---
+
+## Overview
+
+Retrieve a list of all members belonging to a specific organization.
+
+## Query Parameters
+
+<ParamField query="org_id" type="string" required>
+  The unique identifier of the organization
+</ParamField>
+
+## Response
+
+Returns an array of organization members.
+
+<ResponseField name="members" type="array">
+  Array of member objects
+  <Expandable title="Member object properties">
+    <ResponseField name="id" type="string">
+      Unique profile identifier (UUID)
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      Member name
+    </ResponseField>
+    <ResponseField name="email" type="string">
+      Email address
+    </ResponseField>
+    <ResponseField name="tax_id" type="string">
+      RFC (Mexican tax ID)
+    </ResponseField>
+    <ResponseField name="is_admin" type="boolean">
+      Whether the member has admin privileges
+    </ResponseField>
+    <ResponseField name="invoice_count" type="number">
+      Number of invoices created by this member
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X GET "https://app.usatimbre.com/api/timbre/organization-members?org_id=org_123456" \
+  -H "Authorization: Bearer tmb_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/timbre/organization-members?org_id=org_123456', {
+  headers: {
+    'Authorization': 'Bearer tmb_your_api_key_here'
+  }
+});
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://app.usatimbre.com/api/timbre/organization-members',
+    params={'org_id': 'org_123456'},
+    headers={'Authorization': 'Bearer tmb_your_api_key_here'}
+)
+data = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "members": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "Juan Pérez",
+      "email": "juan@example.com",
+      "tax_id": "XAXX010101000",
+      "is_admin": true,
+      "invoice_count": 25
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "María García",
+      "email": "maria@example.com",
+      "tax_id": "XAXX010101001",
+      "is_admin": false,
+      "invoice_count": 12
+    }
+  ]
+}
+```
+
+```json 404
+{
+  "error": "Not Found",
+  "message": "Organization not found"
+}
+```
+</ResponseExample>

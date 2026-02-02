@@ -1,0 +1,123 @@
+---
+title: 'Update Tax Info'
+api: 'PATCH https://app.usatimbre.com/api/profile/{rfc}/tax-info'
+description: 'Update tax information for a profile'
+---
+
+## Overview
+
+Update the tax information associated with a profile. This is used for invoice generation.
+
+## Path Parameters
+
+<ParamField path="rfc" type="string" required>
+  The RFC (Mexican tax ID) or UUID of the profile
+</ParamField>
+
+## Request Body
+
+<ParamField body="tax_id" type="string">
+  RFC (Registro Federal de Contribuyentes)
+</ParamField>
+
+<ParamField body="postal_code" type="string">
+  Postal code (Código Postal). Must be a valid Mexican postal code.
+</ParamField>
+
+<ParamField body="invoice_fiscal_regimen" type="string">
+  Fiscal regimen code. Common values:
+  - `601` - General de Ley Personas Morales
+  - `603` - Personas Morales con Fines no Lucrativos
+  - `605` - Sueldos y Salarios
+  - `606` - Arrendamiento
+  - `612` - Personas Físicas con Actividades Empresariales
+  - `616` - Sin obligaciones fiscales
+  - `625` - Régimen Simplificado de Confianza
+</ParamField>
+
+<ParamField body="invoice_cfdi_use" type="string">
+  CFDI usage code. Common values:
+  - `G01` - Adquisición de mercancías
+  - `G02` - Devoluciones, descuentos o bonificaciones
+  - `G03` - Gastos en general
+  - `P01` - Por definir
+</ParamField>
+
+## Response
+
+Returns the updated tax information object.
+
+<RequestExample>
+```bash cURL
+curl -X PATCH "https://app.usatimbre.com/api/profile/XAXX010101000/tax-info" \
+  -H "Authorization: Bearer tmb_your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tax_id": "XAXX010101000",
+    "postal_code": "12345",
+    "invoice_fiscal_regimen": "601",
+    "invoice_cfdi_use": "G03"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/profile/XAXX010101000/tax-info', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': 'Bearer tmb_your_api_key_here',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    tax_id: 'XAXX010101000',
+    postal_code: '12345',
+    invoice_fiscal_regimen: '601',
+    invoice_cfdi_use: 'G03'
+  })
+});
+const taxInfo = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.patch(
+    'https://app.usatimbre.com/api/profile/XAXX010101000/tax-info',
+    headers={
+        'Authorization': 'Bearer tmb_your_api_key_here',
+        'Content-Type': 'application/json'
+    },
+    json={
+        'tax_id': 'XAXX010101000',
+        'postal_code': '12345',
+        'invoice_fiscal_regimen': '601',
+        'invoice_cfdi_use': 'G03'
+    }
+)
+tax_info = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "tax_id": "XAXX010101000",
+  "taxpayer": "Juan Pérez",
+  "street": "Calle Principal 123",
+  "ext_num": "123",
+  "neighborhood": "Centro",
+  "city": "Ciudad de México",
+  "state": "CDMX",
+  "country": "México",
+  "postal_code": "12345",
+  "fiscal_regimen": "601",
+  "cfdi_use": "G03"
+}
+```
+
+```json 400
+{
+  "error": "Bad Request",
+  "message": "Invalid fiscal regimen code"
+}
+```
+</ResponseExample>

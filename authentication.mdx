@@ -1,0 +1,67 @@
+---
+title: "Autenticación"
+description: "Aprende cómo autenticar tus solicitudes a la API de Timbre"
+---
+
+## Autenticación con Llave API
+
+Todos los endpoints de la API de Timbre (excepto el health check) requieren autenticación usando un token Bearer.
+
+### Obtener tu Llave API
+
+1. Inicia sesión en tu cuenta de Timbre en [api.usatimbre.com](https://api.usatimbre.com)
+2. Navega a la configuración de tu perfil
+3. Genera o copia tu llave API
+
+<Note>
+  Tu llave API comienza con `tmb_` y debe mantenerse segura. Nunca la expongas en código del lado del cliente.
+</Note>
+
+### Usar tu Llave API
+
+Incluye tu llave API en el header `Authorization` de cada solicitud:
+
+```bash
+Authorization: Bearer tmb_tu_llave_api_aqui
+```
+
+### Ejemplo de Solicitud
+
+<CodeGroup>
+```bash cURL
+curl -X GET "https://api.usatimbre.com/api/profile/XAXX010101000" \
+  -H "Authorization: Bearer tmb_tu_llave_api_aqui"
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.usatimbre.com/api/profile/XAXX010101000', {
+  headers: {
+    'Authorization': 'Bearer tmb_tu_llave_api_aqui'
+  }
+});
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    'https://api.usatimbre.com/api/profile/XAXX010101000',
+    headers={'Authorization': 'Bearer tmb_tu_llave_api_aqui'}
+)
+```
+</CodeGroup>
+
+## Respuestas de Error
+
+Si la autenticación falla, recibirás una respuesta `401 Unauthorized`:
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Llave API inválida o faltante"
+}
+```
+
+<Warning>
+  Mantén tu llave API segura. Si crees que tu llave ha sido comprometida, regenera una nueva inmediatamente desde la configuración de tu perfil.
+</Warning>

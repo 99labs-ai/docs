@@ -1,80 +1,124 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: "Inicio Rápido"
+description: "Comienza a usar la API de Timbre en minutos"
 ---
 
-## Get started in three steps
+## Comienza en tres pasos
 
-Get your documentation site running locally and make your first customization.
+Empieza a crear facturas desde tickets con la API de Timbre.
 
-### Step 1: Set up your local environment
+### Paso 1: Obtén tu llave API
 
 <AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
+  <Accordion icon="key" title="Genera tu llave API">
+    1. Inicia sesión en tu cuenta de Timbre en [api.usatimbre.com](https://api.usatimbre.com)
+    2. Navega a la configuración de tu perfil
+    3. Genera una nueva llave API o copia la existente
+
+    <Warning>Mantén tu llave API segura y nunca la expongas en código del lado del cliente.</Warning>
   </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
+  <Accordion icon="circle-check" title="Prueba tu llave API">
+    Verifica que tu llave API funcione llamando al endpoint de perfil:
+
+    ```bash
+    curl -X GET "https://api.usatimbre.com/api/profile/TU_RFC" \
+      -H "Authorization: Bearer tmb_tu_llave_api_aqui"
+    ```
+
+    <Tip>Reemplaza `TU_RFC` con tu RFC real y usa tu llave API real.</Tip>
   </Accordion>
 </AccordionGroup>
 
-### Step 2: Deploy your changes
+### Paso 2: Configura tu perfil
 
 <AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+  <Accordion icon="user" title="Verifica tu información fiscal">
+    Antes de crear facturas, asegúrate de que tu información fiscal esté actualizada:
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+    ```bash
+    curl -X GET "https://api.usatimbre.com/api/profile/TU_RFC/tax-info" \
+      -H "Authorization: Bearer tmb_tu_llave_api_aqui"
+    ```
+  </Accordion>
+  <Accordion icon="pen-to-square" title="Actualiza la información fiscal si es necesario">
+    Actualiza tu información fiscal con los campos requeridos:
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
+    ```bash
+    curl -X PATCH "https://api.usatimbre.com/api/profile/TU_RFC/tax-info" \
+      -H "Authorization: Bearer tmb_tu_llave_api_aqui" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "postal_code": "12345",
+        "invoice_fiscal_regimen": "601",
+        "invoice_cfdi_use": "G03"
+      }'
+    ```
   </Accordion>
 </AccordionGroup>
 
-### Step 3: Go live
+### Paso 3: Crea tu primera factura
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
+<Accordion icon="file-invoice" title="Crea factura desde ticket">
+  Envía una imagen de ticket para crear una factura:
+
+  ```bash
+  curl -X POST "https://api.usatimbre.com/api/timbre/facturar-ticket" \
+    -H "Authorization: Bearer tmb_tu_llave_api_aqui" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "receipt_image": "datos_imagen_base64",
+      "cfdi_usage": "G03",
+      "expense_description": "Gasto empresarial"
+    }'
+  ```
+
+  <Note>Esta operación requiere 1 crédito. Asegúrate de tener créditos suficientes.</Note>
 </Accordion>
 
-## Next steps
+## Siguientes pasos
 
-Now that you have your docs running, explore these key features:
+Explora las capacidades completas de la API:
 
 <CardGroup cols={2}>
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
+<Card title="Gestión de Perfiles" icon="user" href="/api-reference/profile/get-by-rfc">
+  Administra perfiles de usuario e información fiscal.
 </Card>
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
+<Card title="Gestión de Organizaciones" icon="building" href="/api-reference/organization/get">
+  Administra organizaciones y miembros.
 </Card>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
+<Card title="Crear Facturas" icon="file-invoice" href="/api-reference/timbre/create-invoice">
+  Crea facturas desde imágenes de tickets.
 </Card>
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
+<Card title="Obtener Detalles de Factura" icon="magnifying-glass" href="/api-reference/timbre/get-invoice">
+  Recupera archivos PDF y XML de facturas.
 </Card>
 
 </CardGroup>
 
+## Códigos de Uso CFDI Comunes
+
+| Código | Descripción |
+|--------|-------------|
+| `G01` | Adquisición de mercancías |
+| `G02` | Devoluciones, descuentos o bonificaciones |
+| `G03` | Gastos en general |
+| `P01` | Por definir |
+
+## Códigos de Régimen Fiscal Comunes
+
+| Código | Descripción |
+|--------|-------------|
+| `601` | General de Ley Personas Morales |
+| `603` | Personas Morales con Fines no Lucrativos |
+| `605` | Sueldos y Salarios |
+| `606` | Arrendamiento |
+| `612` | Personas Físicas con Actividades Empresariales |
+| `625` | Régimen Simplificado de Confianza |
+
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  **¿Necesitas ayuda?** Contacta a soporte en [soporte@usatimbre.com](mailto:soporte@usatimbre.com).
 </Note>

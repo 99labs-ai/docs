@@ -1,33 +1,76 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Referencia API'
+description: 'Todo lo que necesitas para integrar Timbre en tu aplicación'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## URL Base
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
 ```
+https://api.usatimbre.com
+```
+
+## Autenticación
+
+Incluye tu llave API en cada solicitud:
+
+```bash
+Authorization: Bearer tmb_tu_llave_api
+```
+
+<Card title="Ver guía completa de autenticación" icon="key" href="/authentication" />
+
+## Explora la API
+
+<CardGroup cols={2}>
+  <Card title="Perfiles" icon="user" href="/api-reference/profile/get-by-rfc">
+    Gestiona usuarios y su información fiscal por RFC o ID.
+  </Card>
+  <Card title="Organizaciones" icon="building" href="/api-reference/organization/get">
+    Administra empresas y sus miembros.
+  </Card>
+  <Card title="Facturación" icon="file-invoice" href="/api-reference/timbre/create-invoice">
+    Crea facturas desde tickets automáticamente.
+  </Card>
+  <Card title="Estado" icon="heart-pulse" href="/api-reference/health/check">
+    Verifica la disponibilidad del servicio.
+  </Card>
+</CardGroup>
+
+## Respuestas
+
+<Tabs>
+  <Tab title="Exitosa">
+    ```json
+    {
+      "success": true,
+      "data": {
+        "id": "inv_abc123",
+        "status": "completed",
+        "pdf_url": "https://..."
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Error">
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "INVALID_RFC",
+        "message": "El RFC proporcionado no es válido"
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Códigos HTTP
+
+| Código | Significado |
+|--------|-------------|
+| `200` | Solicitud exitosa |
+| `400` | Error en los datos enviados |
+| `401` | Llave API inválida o faltante |
+| `404` | Recurso no encontrado |
+| `429` | Demasiadas solicitudes |
+| `500` | Error interno del servidor |

@@ -1,0 +1,81 @@
+---
+title: 'Delete Profile'
+api: 'DELETE https://app.usatimbre.com/api/profile/{rfc}'
+description: 'Delete a profile'
+---
+
+## Overview
+
+Delete a profile from the system. This operation will fail if the profile has existing invoices or subprofiles with requests.
+
+<Warning>
+  This action is irreversible. Make sure you want to permanently delete this profile before proceeding.
+</Warning>
+
+## Path Parameters
+
+<ParamField path="rfc" type="string" required>
+  The RFC (Mexican tax ID) or UUID of the profile to delete
+</ParamField>
+
+## Response
+
+Returns a success message on successful deletion.
+
+<ResponseField name="success" type="boolean">
+  Whether the deletion was successful
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X DELETE "https://app.usatimbre.com/api/profile/XAXX010101000" \
+  -H "Authorization: Bearer tmb_your_api_key_here"
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/profile/XAXX010101000', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer tmb_your_api_key_here'
+  }
+});
+const result = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.delete(
+    'https://app.usatimbre.com/api/profile/XAXX010101000',
+    headers={'Authorization': 'Bearer tmb_your_api_key_here'}
+)
+result = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "success": true,
+  "message": "Profile deleted successfully"
+}
+```
+
+```json 400
+{
+  "error": "Bad Request",
+  "message": "Cannot delete profile with existing invoices"
+}
+```
+
+```json 404
+{
+  "error": "Not Found",
+  "message": "Profile not found"
+}
+```
+</ResponseExample>

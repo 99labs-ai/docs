@@ -1,0 +1,128 @@
+---
+title: 'Update Organization Member'
+api: 'PATCH https://app.usatimbre.com/api/organizations/{org_id}/members/{rfc}'
+description: 'Update member profile'
+---
+
+## Overview
+
+Update a member's profile information within an organization.
+
+## Path Parameters
+
+<ParamField path="org_id" type="string" required>
+  The unique identifier of the organization
+</ParamField>
+
+<ParamField path="rfc" type="string" required>
+  The RFC (Mexican tax ID) or profile UUID of the member
+</ParamField>
+
+## Request Body
+
+<ParamField body="name" type="string">
+  Updated member name
+</ParamField>
+
+<ParamField body="email" type="string">
+  Updated email address
+</ParamField>
+
+<ParamField body="phone_number" type="string">
+  Updated phone number. Should include country code (e.g., `+525512345678`)
+</ParamField>
+
+## Response
+
+Returns the updated member profile object.
+
+<ResponseField name="id" type="string">
+  Unique profile identifier (UUID)
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Updated member name
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Updated email address
+</ResponseField>
+
+<ResponseField name="phone_number" type="string">
+  Updated phone number
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  ISO 8601 timestamp of the update
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X PATCH "https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000" \
+  -H "Authorization: Bearer tmb_your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Member Name",
+    "email": "updated@example.com",
+    "phone_number": "+525512345678"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': 'Bearer tmb_your_api_key_here',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'Updated Member Name',
+    email: 'updated@example.com',
+    phone_number: '+525512345678'
+  })
+});
+const member = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.patch(
+    'https://app.usatimbre.com/api/organizations/org_123456/members/XAXX010101000',
+    headers={
+        'Authorization': 'Bearer tmb_your_api_key_here',
+        'Content-Type': 'application/json'
+    },
+    json={
+        'name': 'Updated Member Name',
+        'email': 'updated@example.com',
+        'phone_number': '+525512345678'
+    }
+)
+member = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Updated Member Name",
+  "email": "updated@example.com",
+  "phone_number": "+525512345678",
+  "tax_id": "XAXX010101000",
+  "org_id": "org_123456",
+  "is_admin": false,
+  "credits_remaining": 50,
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-21T09:00:00Z"
+}
+```
+
+```json 400
+{
+  "error": "Bad Request",
+  "message": "Invalid email format"
+}
+```
+</ResponseExample>

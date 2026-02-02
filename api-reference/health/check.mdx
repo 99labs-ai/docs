@@ -1,0 +1,68 @@
+---
+title: 'Health Check'
+api: 'GET https://app.usatimbre.com/api/health'
+description: 'Health check endpoint - no authentication required'
+---
+
+## Overview
+
+Check the health status of the Timbre API. This endpoint does not require authentication and can be used to verify that the API is operational.
+
+<Note>
+  This is the only endpoint that does not require authentication.
+</Note>
+
+## Response
+
+<ResponseField name="status" type="string">
+  Health status. Returns `ok` when the API is operational.
+</ResponseField>
+
+<ResponseField name="timestamp" type="string">
+  ISO 8601 timestamp of the health check
+</ResponseField>
+
+<ResponseField name="version" type="string">
+  API version
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X GET "https://app.usatimbre.com/api/health"
+```
+
+```javascript JavaScript
+const response = await fetch('https://app.usatimbre.com/api/health');
+const health = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get('https://app.usatimbre.com/api/health')
+health = response.json()
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "status": "ok",
+  "timestamp": "2024-01-21T10:30:00Z",
+  "version": "1.0.1"
+}
+```
+
+```json 503
+{
+  "status": "error",
+  "message": "Service temporarily unavailable"
+}
+```
+</ResponseExample>
+
+## Use Cases
+
+- **Monitoring**: Use this endpoint for uptime monitoring and alerting
+- **Load Balancer Health Checks**: Configure load balancers to check API availability
+- **Integration Testing**: Verify API connectivity before running integration tests

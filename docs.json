@@ -1,68 +1,80 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Timbre by Taxo",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#10B981",
+    "light": "#34D399",
+    "dark": "#059669"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Guías",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Primeros Pasos",
             "pages": [
               "index",
               "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "authentication"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Referencia API",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Descripción General",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Gestión de Perfiles",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/profile/get-by-rfc",
+              "api-reference/profile/get-by-id",
+              "api-reference/profile/update",
+              "api-reference/profile/delete",
+              "api-reference/profile/get-tax-info",
+              "api-reference/profile/update-tax-info"
+            ]
+          },
+          {
+            "group": "Gestión de Organizaciones",
+            "pages": [
+              "api-reference/organization/get",
+              "api-reference/organization/update",
+              "api-reference/organization/list-members",
+              "api-reference/organization/get-member",
+              "api-reference/organization/update-member",
+              "api-reference/organization/delete-member"
+            ]
+          },
+          {
+            "group": "API Timbre (Facturas)",
+            "pages": [
+              "api-reference/timbre/get-profile",
+              "api-reference/timbre/create-profile",
+              "api-reference/timbre/organization-members",
+              "api-reference/timbre/member-info",
+              "api-reference/timbre/member-invoices",
+              "api-reference/timbre/create-invoice",
+              "api-reference/timbre/create-invoice-org",
+              "api-reference/timbre/get-invoice"
+            ]
+          },
+          {
+            "group": "Estado del Servicio",
+            "pages": [
+              "api-reference/health/check"
             ]
           }
         ]
@@ -71,52 +83,48 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Panel",
+          "href": "https://app.usatimbre.com",
+          "icon": "browser"
         }
       ]
     }
   },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Soporte",
+        "href": "mailto:soporte@usatimbre.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Ir a Timbre",
+      "href": "https://app.usatimbre.com"
     }
   },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+  "api": {
+    "mdx": {
+      "server": "https://api.usatimbre.com",
+      "auth": {
+        "method": "bearer"
+      }
+    }
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://usatimbre.com"
     }
+  },
+  "seo": {
+    "indexHiddenPages": false
+  },
+  "metadata": {
+    "og:site_name": "Timbre by Taxo - Documentación API",
+    "og:locale": "es_MX"
   }
 }
