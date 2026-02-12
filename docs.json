@@ -68,6 +68,7 @@
               "api-reference/timbre/member-invoices",
               "api-reference/timbre/create-invoice",
               "api-reference/timbre/create-invoice-org",
+              "api-reference/timbre/create-invoice-full",
               "api-reference/timbre/get-invoice"
             ]
           },
