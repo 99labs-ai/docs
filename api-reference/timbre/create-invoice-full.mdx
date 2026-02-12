@@ -188,8 +188,8 @@ Requires a valid API key with:
 </ResponseField>
 
 <RequestExample>
-```bash Existing member
-curl -X POST "https://api.usatimbre.com/api/timbre/create-invoice-full" \
+```bash Existing RFC (minimal request)
+curl -X POST https://api.usatimbre.com/api/timbre/create-invoice-full \
   -H "Authorization: Bearer tmb_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
@@ -201,27 +201,29 @@ curl -X POST "https://api.usatimbre.com/api/timbre/create-invoice-full" \
   }'
 ```
 
-```bash New member
-curl -X POST "https://api.usatimbre.com/api/timbre/create-invoice-full" \
+```bash New RFC (creates profile)
+curl -X POST https://api.usatimbre.com/api/timbre/create-invoice-full \
   -H "Authorization: Bearer tmb_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "tax_info": {
       "tax_id": "XAXX010101000",
-      "taxpayer": "Juan Pérez",
-      "postal_code": "12345",
-      "fiscal_regimen": "601",
-      "cfdi_use": "G03"
+      "cfdi_use": "G03",
+      "taxpayer": "Juan Pérez García",
+      "postal_code": "06600",
+      "fiscal_regimen": "612"
     },
-    "receipt_image": "data:image/jpeg;base64,/9j/4AAQ..."
+    "receipt_image": "data:image/jpeg;base64,/9j/4AAQ...",
+    "email": "juan@example.com",
+    "phone_number": "+5214431041040"
   }'
 ```
 
-```bash Multipart form-data
-curl -X POST "https://api.usatimbre.com/api/timbre/create-invoice-full" \
+```bash Form data upload
+curl -X POST https://api.usatimbre.com/api/timbre/create-invoice-full \
   -H "Authorization: Bearer tmb_your_api_key" \
   -F 'tax_info={"tax_id":"XAXX010101000","cfdi_use":"G03"}' \
-  -F 'receipt_image=@/path/to/receipt.jpg'
+  -F 'receipt_image=@receipt.jpg'
 ```
 
 ```javascript JavaScript
