@@ -368,7 +368,9 @@ result = response.json()
 | 403 | `FEATURE_DISABLED` | `api_keys_enabled` not active for the organization |
 | 403 | `INSUFFICIENT_CREDITS` | No credits remaining |
 | 404 | `RFC_NOT_FOUND` | RFC not in organization and missing required fields to create profile |
+| 500 | `LOOKUP_ERROR` | Error looking up RFC |
 | 500 | `AUTH_USER_CREATION_FAILED` | Failed to create auth user for new profile |
 | 500 | `PROFILE_CREATION_FAILED` | Failed to create profile record |
 | 500 | `TAX_INFO_CREATION_FAILED` | Failed to create tax info record |
+| 500 | `INTERNAL_ERROR` | Unexpected server error |
 | 503 | `SERVICE_UNAVAILABLE` | Invoicing provider is temporarily unavailable |
