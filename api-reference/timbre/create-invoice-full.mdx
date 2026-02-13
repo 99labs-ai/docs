@@ -6,7 +6,7 @@ description: 'Create an invoice from a receipt image in a single call, with auto
 
 ## Overview
 
-Create an invoice from a receipt image in a single call. Provide an RFC to use an existing member, or include full tax info to automatically create a new member profile.
+Create an invoice from a receipt image in a single call. Provide complete tax info to use an existing member by RFC or automatically create a new member profile.
 
 Supports JSON (with base64 image) or `multipart/form-data` (with file upload).
 
@@ -67,13 +67,12 @@ Requires a valid API key with:
 
 1. Validates the API key, organization, feature flag, and input fields
 2. Looks up the RFC in the caller's organization:
-   - **Found** — uses the existing profile and its stored tax data
-   - **Not found + full tax info provided** — creates a new member profile, then submits the invoice
-   - **Not found + missing required fields** — returns `404` listing the required fields
+   - **Found** — uses the existing profile
+   - **Not found** — creates a new member profile with the provided tax data, then submits the invoice
 3. Resolves the tax regime for the invoice:
    - If `fiscal_regimen` is in the request, uses it (validated against member's regimes)
    - If the member has a single regime, uses it automatically
-   - If the member has multiple regimes and none specified, returns `400`
+   - If the member has multiple regimes and the provided value is not valid, returns `400`
 4. Checks credits on the API key owner
 5. Submits the invoice to the invoicing provider
 6. Returns the invoice, member, and whether a new profile was created
@@ -155,14 +154,17 @@ Requires a valid API key with:
 </ResponseField>
 
 <RequestExample>
-```bash Existing RFC (minimal request)
+```bash Existing RFC
 curl -X POST https://api.usatimbre.com/api/timbre/create-invoice-full \
   -H "Authorization: Bearer tmb_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "tax_info": {
       "tax_id": "XAXX010101000",
-      "cfdi_use": "G03"
+      "cfdi_use": "G03",
+      "taxpayer": "Juan Pérez García",
+      "postal_code": "06600",
+      "fiscal_regimen": "612"
     },
     "receipt_image": "data:image/jpeg;base64,/9j/4AAQ..."
   }'
@@ -203,7 +205,10 @@ response = requests.post(
     json={
         'tax_info': {
             'tax_id': 'XAXX010101000',
-            'cfdi_use': 'G03'
+            'cfdi_use': 'G03',
+            'taxpayer': 'Juan Pérez García',
+            'postal_code': '06600',
+            'fiscal_regimen': '612'
         },
         'receipt_image': f'data:image/jpeg;base64,{image_base64}'
     }
@@ -248,17 +253,7 @@ result = response.json()
   "success": false,
   "error": {
     "code": "MISSING_REQUIRED_FIELDS",
-    "message": "Missing required fields: tax_id, cfdi_use, receipt_image"
-  }
-}
-```
-
-```json 400 Regime required
-{
-  "success": false,
-  "error": {
-    "code": "REGIME_REQUIRED",
-    "message": "Member has multiple regimes; fiscal_regimen must be specified"
+    "message": "Missing required fields: tax_id, cfdi_use, fiscal_regimen, taxpayer, postal_code, receipt_image"
   }
 }
 ```
@@ -288,7 +283,7 @@ result = response.json()
   "success": false,
   "error": {
     "code": "RFC_NOT_FOUND",
-    "message": "RFC not found in organization. To create a new profile, include: taxpayer, postal_code, fiscal_regimen"
+    "message": "RFC not found in organization"
   }
 }
 ```
@@ -298,12 +293,11 @@ result = response.json()
 
 | Status | Code | Description |
 |--------|------|-------------|
-| 400 | `MISSING_REQUIRED_FIELDS` | Missing `tax_id`, `cfdi_use`, or `receipt_image` |
+| 400 | `MISSING_REQUIRED_FIELDS` | Missing `tax_id`, `cfdi_use`, `fiscal_regimen`, `taxpayer`, `postal_code`, or `receipt_image` |
 | 400 | `INVALID_RFC_FORMAT` | RFC doesn't match Mexican format (12-13 chars) |
 | 400 | `INVALID_TAX_REGIME` | Invalid fiscal regime code |
 | 400 | `INVALID_CFDI_FOR_REGIME` | CFDI usage code not valid for the resolved regime |
 | 400 | `INVALID_REGIME` | Specified regime not in the member's registered regimes |
-| 400 | `REGIME_REQUIRED` | Member has multiple regimes; `fiscal_regimen` must be specified |
 | 400 | `INVALID_EMAIL` | Email format is invalid |
 | 400 | `INVALID_PHONE_NUMBER` | Phone number format is invalid |
 | 401 | — | Missing API key |
@@ -311,7 +305,7 @@ result = response.json()
 | 403 | `NO_ORGANIZATION` | API key owner has no organization |
 | 403 | `FEATURE_DISABLED` | `api_keys_enabled` not active for the organization |
 | 403 | `INSUFFICIENT_CREDITS` | No credits remaining |
-| 404 | `RFC_NOT_FOUND` | RFC not in organization and missing required fields to create profile |
+| 404 | `RFC_NOT_FOUND` | RFC not found in organization |
 | 500 | `LOOKUP_ERROR` | Error looking up RFC |
 | 500 | `AUTH_USER_CREATION_FAILED` | Failed to create auth user for new profile |
 | 500 | `PROFILE_CREATION_FAILED` | Failed to create profile record |

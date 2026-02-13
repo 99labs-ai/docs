@@ -66,6 +66,7 @@
               "api-reference/timbre/organization-members",
               "api-reference/timbre/member-info",
               "api-reference/timbre/member-invoices",
+              "api-reference/timbre/organization-credits",
               "api-reference/timbre/create-invoice",
               "api-reference/timbre/create-invoice-org",
               "api-reference/timbre/create-invoice-full",
