@@ -35,14 +35,14 @@ Requires a valid API key with:
       - `G03` - Gastos en general
       - `S01` - Sin efectos fiscales
     </ParamField>
-    <ParamField body="fiscal_regimen" type="string">
-      Tax regime code (e.g., `601`, `612`, `626`). **Required** when creating a new profile. Also required for existing members with multiple regimes.
+    <ParamField body="fiscal_regimen" type="string" required>
+      Tax regime code (e.g., `601`, `612`, `626`).
     </ParamField>
-    <ParamField body="taxpayer" type="string">
-      Full name or business name. **Required** when the RFC is not found in your organization.
+    <ParamField body="taxpayer" type="string" required>
+      Full name or business name.
     </ParamField>
-    <ParamField body="postal_code" type="string">
-      Fiscal postal code. **Required** when creating a new profile.
+    <ParamField body="postal_code" type="string" required>
+      Fiscal postal code.
     </ParamField>
   </Expandable>
 </ParamField>
